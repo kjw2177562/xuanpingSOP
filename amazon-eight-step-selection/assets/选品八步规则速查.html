@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>亚马逊选品开品八步 · 规则速查</title><style>
+:root{
+ --brand:#8c3f1c;--strong:#6f3115;--light:#fdf3ec;--border:#e8d4c4;
+ --paper:#fffdf9;--cream:#fbf6ec;--ink:#2a2419;
+ --danger:#96382e;--warning:#8a5a20;--success:#3f6b4f;
+ --g50:#f4ede0;--g100:#ede4d2;--g200:#e1d8c4;--g300:#cbbfa6;--g500:#a39c8a;--g600:#736e60;--g800:#3d3829;
+ --sans:-apple-system,BlinkMacSystemFont,'PingFang SC','Segoe UI','Microsoft YaHei',sans-serif;
+ --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--g50);font-family:var(--sans);color:var(--g800);-webkit-font-smoothing:antialiased;padding:26px 0 60px;font-size:13px}
+.page{max-width:1000px;margin:0 auto;padding:0 22px}
+.report-head{background:var(--paper);border:1px solid var(--border);padding:26px 30px;margin-bottom:14px}
+.skill-badge{display:inline-flex;align-items:center;gap:6px;background:var(--light);color:var(--strong);
+ border:1px solid var(--border);padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;margin-bottom:12px}
+.report-head h1{font-size:25px;font-weight:800;letter-spacing:-.3px;margin-bottom:8px;line-height:1.35}
+.report-meta{display:flex;flex-wrap:wrap;gap:7px 20px;color:var(--g600);font-size:12.5px;line-height:1.75}
+.report-meta b{color:var(--g800)}
+.verdict{display:flex;margin-bottom:14px;border:1px solid var(--border)}
+.verdict .decision{flex:0 0 180px;display:flex;flex-direction:column;justify-content:center;align-items:center;
+ background:var(--ink);color:#f4ede0;padding:22px 14px;text-align:center}
+.verdict .decision .word{font-size:26px;font-weight:800;letter-spacing:1px}
+.verdict .decision .score{font-size:12.5px;opacity:.92;margin-top:5px;line-height:1.6}
+.verdict .reason{flex:1;background:var(--cream);padding:18px 24px}
+.verdict .reason h3{font-size:12px;color:var(--strong);letter-spacing:1px;margin:0 0 8px}
+.verdict .reason p{font-size:13.5px;line-height:1.75;color:var(--g800);margin:0 0 9px}
+.verdict .reason p:last-child{margin-bottom:0}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi{background:var(--paper);border:1px solid var(--g200);padding:14px 16px}
+.kpi .label{font-size:12px;color:var(--g600);margin-bottom:5px}
+.kpi .value{font-size:23px;font-weight:800;font-family:var(--mono);letter-spacing:-.5px}
+.kpi .value small{font-size:12px;font-weight:600;color:var(--g500)}
+.kpi .delta{font-size:12px;margin-top:4px;font-weight:600;color:var(--g600);line-height:1.6}
+/* 粘性导航 */
+.nav{position:sticky;top:0;z-index:50;display:flex;flex-wrap:wrap;gap:5px;background:var(--paper);
+ border:1px solid var(--g200);padding:9px;margin-bottom:14px;box-shadow:0 2px 8px rgba(42,36,25,.06)}
+.nav a{flex:1 1 auto;min-width:88px;text-align:center;background:var(--g50);border:1px solid var(--g200);
+ color:var(--g600);padding:8px 9px;border-radius:5px;font-size:12.5px;font-weight:700;line-height:1.4;border-bottom:1px solid var(--g200)}
+.nav a:hover{border-color:var(--brand);color:var(--strong);border-bottom-color:var(--brand)}
+/* 流程条 */
+.flow{display:flex;flex-wrap:wrap;gap:5px;background:var(--paper);border:1px solid var(--g200);padding:14px;margin-bottom:14px}
+.flow .node{flex:1 1 90px;background:var(--cream);border:1px solid var(--border);padding:9px 8px;text-align:center;border-radius:4px}
+.flow .node .s{font-size:11.5px;color:var(--strong);font-weight:800;line-height:1.4}
+.flow .node .t{font-size:12px;color:var(--g800);margin-top:3px;line-height:1.4}
+.flow .node .c{font-size:11px;color:var(--g500);margin-top:4px;line-height:1.4}
+.flow .arrow{align-self:center;color:var(--g300);font-size:15px;font-weight:800}
+/* 章节 */
+.section{background:var(--paper);border:1px solid var(--g200);padding:22px 26px;margin-bottom:14px;scroll-margin-top:74px}
+.section>h2{font-size:16px;font-weight:800;margin:0 0 6px;display:flex;align-items:center;gap:10px;line-height:1.5}
+.section>h2 .num{display:inline-flex;width:25px;height:25px;align-items:center;justify-content:center;
+ background:var(--brand);color:#fff;font-size:12.5px;border-radius:999px;flex:none}
+.section .sub{font-size:12.5px;color:var(--g600);line-height:1.75;margin:0 0 12px}
+.section h3{font-size:13.5px;line-height:1.75;font-weight:800;color:var(--strong);margin:16px 0 8px}
+.section p,.section li{font-size:13px;line-height:1.75;color:var(--g800);margin:0 0 8px}
+.section ul,.section ol{margin:0 0 12px;padding-left:20px}
+.section li{margin-bottom:6px}
+.section b{color:var(--strong)}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin:0 0 12px}
+th{background:var(--g100);color:var(--g600);font-weight:700;text-align:left;padding:8px 10px;
+ border-bottom:2px solid var(--g200);white-space:nowrap;font-size:12px;line-height:1.5}
+td{padding:8px 10px;border-bottom:1px solid var(--g100);vertical-align:top;line-height:1.65;font-size:12.5px}
+tr:last-child td{border-bottom:none}
+td p,th p{font-size:12.5px;line-height:1.65;margin:0}
+.tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.tag.ok{background:#e7ede4;color:var(--success)}.tag.warn{background:#f2e8d8;color:var(--warning)}
+.tag.bad{background:#f0e2de;color:var(--danger)}.tag.info{background:var(--light);color:var(--strong)}
+.callout{border-left:3px solid var(--brand);background:var(--cream);padding:11px 15px;margin:0 0 13px}
+.callout p{margin:0 0 6px;font-size:13px;line-height:1.75}
+.callout p:last-child{margin-bottom:0}
+.callout.warnbox{border-left-color:var(--danger);background:#fbf1ef}
+.callout.okbox{border-left-color:var(--success);background:#f1f6ef}
+.block{border-left:3px solid var(--border);background:var(--cream);padding:10px 14px;margin:0 0 10px}
+.block p{font-size:12.5px;line-height:1.75;margin:0 0 5px}
+.block p:last-child{margin-bottom:0}
+pre{background:#2a2419;color:#f4ede0;padding:14px 16px;border-radius:4px;overflow-x:auto;
+ font-family:var(--mono);font-size:12px;line-height:1.85;margin:0 0 12px}
+pre .cm{color:#cbbfa6}
+ul.plain{list-style:none;padding:0;margin:0 0 12px}
+ul.plain li{padding:7px 0;border-bottom:1px dashed var(--g200);font-size:13px;line-height:1.7;margin:0}
+ul.plain li:last-child{border-bottom:none}
+.mini{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 13px}
+.mini span{background:var(--light);border:1px solid var(--border);color:var(--strong);
+ padding:6px 11px;border-radius:4px;font-size:12.5px;font-weight:700;line-height:1.5}
+.footer{margin-top:18px;text-align:center;color:var(--g500);font-size:12px;line-height:1.9}
+.footer b{color:var(--brand)}
+@media(max-width:760px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.verdict{flex-direction:column}
+ .verdict .decision{flex:none}.flow .arrow{display:none}}
+</style></head><body>
+<div class="page"><header class="report-head"><span class="skill-badge">amazon-eight-step-selection · 我的选品 SOP v1</span>
+<h1>亚马逊选品开品八步 · 规则速查</h1>
+<div class="report-meta"><span>用途 <b>可复用的选品 SOP / 规则清单</b></span><span>适用站点 <b>美国站（规则通用）</b></span>
+<span>来源 <b>个人 skill · 选品实战沉淀</b></span><span>整理 <b>2026-11-13</b></span></div></header><section class="verdict"><div class="decision"><div class="word">顺序<br>不能换</div>
+<div class="score">成本递增：利润最便宜<br>→ 差评最费人 → 合规最贵</div></div>
+<div class="reason"><h3>一句话总则</h3>
+<p>把一个大方向、一个类目节点或一个对标 ASIN，推进到一份能发给工厂的开品 PRD。<b>先用最便宜的闸门砍掉大部分</b>：利润是纯算术，差评要一条条拉一条条归堆，合规最费人还可能要律师。</p>
+<p>每一步只做一件事：<b>第 1 步划范围、第 2 步只捞不排序、第 3 步只归类不取舍、第 5 步才砍</b>。任何「拿不到的字段」标「待补」，绝不编数；任何示例参数显著标「示例」。</p></div></section><div class="kpi-grid">
+<div class="kpi"><div class="label">主流程</div><div class="value">8<small> 步</small></div><div class="delta">另有第 0 步前置门槛</div></div>
+<div class="kpi"><div class="label">筛选规则</div><div class="value">7<small> 套</small></div><div class="delta">A / B / C / D / E / F / J</div></div>
+<div class="kpi"><div class="label">利润判定</div><div class="value">3<small> 档</small></div><div class="delta">通过 / 观察 / 淘汰</div></div>
+<div class="kpi"><div class="label">停下等人</div><div class="value">3<small> 处</small></div><div class="delta">打样下单 · 备货 · 上架发布</div></div></div><nav class="nav"><a href="#s0">前置 先问清规则</a><a href="#s1">1 选择类目</a><a href="#s2">2 筛选产品</a><a href="#s3">3 梳理产品定位</a><a href="#s4">4 拓展对标产品</a><a href="#s5">5 计算利润并筛选</a><a href="#s6">6 从评论找改良点</a><a href="#s7">7 合规检查</a><a href="#s8">8 产出开品文档</a><a href="#appendix">附录</a></nav><div class="flow"><div class="node"><div class="s">0</div><div class="t">问清规则</div><div class="c">纯问答</div></div><span class="arrow">›</span><div class="node"><div class="s">1</div><div class="t">选类目</div><div class="c">最便宜</div></div><span class="arrow">›</span><div class="node"><div class="s">2</div><div class="t">筛产品</div><div class="c">捞不排序</div></div><span class="arrow">›</span><div class="node"><div class="s">3</div><div class="t">梳理定位</div><div class="c">只归类</div></div><span class="arrow">›</span><div class="node"><div class="s">4</div><div class="t">拓展对标</div><div class="c">补真值</div></div><span class="arrow">›</span><div class="node"><div class="s">5</div><div class="t">算利润</div><div class="c">纯算术</div></div><span class="arrow">›</span><div class="node"><div class="s">6</div><div class="t">找改良点</div><div class="c">逐条归堆</div></div><span class="arrow">›</span><div class="node"><div class="s">7</div><div class="t">合规检查</div><div class="c">最费人</div></div><span class="arrow">›</span><div class="node"><div class="s">8</div><div class="t">开品文档</div><div class="c">停下确认</div></div></div><section class="section" id="s0"><h2><span class="num">0</span>先问清规则</h2><p class="sub">没问就开跑 = 报告里全是默认值。客户端能读写本地文件时，先读 ~/.duobaoyu/selection-rules.json；有就直接用并说明「本次使用：你的规则（上次修改 X）」，没有就一次问完下面这组，问完写回该文件（含日期与一句话理由）。</p><table><thead><tr><th>问什么</th><th>决定哪条门槛</th></tr></thead><tbody><tr><td>哪个站点、哪个大类？已有想做的节点吗？</td><td>起点宽度 —— 已有节点就跳过类目层</td></tr><tr><td>首批能压多少钱？</td><td>首批件数、能不能做高客单</td></tr><tr><td>能接受的客单价区间？</td><td>price_min / max；低于 $15 广告基本跑不平</td></tr><tr><td>做不做大件？头程报价（¥/计费kg）、什么渠道？</td><td>重量上限与抛重除数 —— 最容易被忽略、最容易让整条链白做</td></tr><tr><td>优势在哪：自有工厂 / 设计 / 站外流量 / 资金 / 都没有？</td><td>用哪套选品逻辑</td></tr><tr><td>新品能熬多久：3 个月回本还是能等一年？</td><td>评论数门槛；要快就压到 200–500</td></tr><tr><td>有无食品 / 保健 / 药品资质？</td><td>这些方向能否放回来</td></tr><tr><td>退货率能忍多少？做不做穿戴、尺码类？</td><td>退货率门槛</td></tr></tbody></table><div class="callout warnbox"><p><b>绝对阈值</b>（月销下限、重量上限、价格带）一次定好、全类目通用；<b>相对阈值</b>（单品效率倍数、均分 P30、Top3 占比排序位次）每换一个节点重算 —— 先拉该节点分布值，再定阈值。</p><p>用户在 prompt 里临时给的门槛只用这一次，不覆盖存档。</p></div><div class="callout warnbox"><p><b>卡点：没问清就开跑，后续所有判定都建立在默认值上</b></p></div></section><section class="section" id="s1"><h2><span class="num">1</span>第 1 步 · 选择类目</h2><p class="sub">目的是划定范围、排除不能做的，不是找机会。产出：节点白名单 + 每节点选择原因 / 推荐理由 / 受众 / 代表商品 / 销量趋势。</p><table><thead><tr><th>动作</th><th>规则</th></tr></thead><tbody><tr><td>逐层下钻</td><td>category_tree 逐层拿节点（顶级 id 是 slug，二级以下是数字）→ 逐个 category_report</td></tr><tr><td>硬排除</td><td>需资质的（药品、保健品、处方粮、食品接触）· 自营销售额占比过高 · 单一品牌垄断（Top3 品牌占比高 + 品牌数少）· 退货率超用户门槛；穿戴 / 尺码 / 易碎标「高退货嫌疑」留到第 6 步验证</td></tr><tr><td>规模下限</td><td>销量、均价落在用户价格带与资金能力内</td></tr><tr><td>集中度</td><td>只排序不排除：按 Top3 占比从低到高排取前 N。一刀切会杀掉「整体挤但某价格带没人做」的细分</td></tr><tr><td>趋势</td><td>每个白名单节点拉近 25 个月销量趋势；最后一个月是残月，剔除再算同比：近 12 月合计 ÷ 前 12 月合计 − 1</td></tr><tr><td>合并读</td><td>&lt;300 评商品销量占比与同比一起读：占比高但同比在跌 = 需求退潮，不是好进</td></tr><tr><td>抽查</td><td>类目归类有噪音，下结论前抽查榜单（实测 Dog Apparel 榜首是人用头巾）</td></tr><tr><td>国别</td><td>每个节点都算中国卖家占比，和推荐结论一起看 —— 集中度低、趋势好但中国卖家占九成，不是好位置</td></tr></tbody></table><div class="callout"><p>白名单为 0 就放宽，每次只动一条。卖家精灵路径没有 category_tree / category_report，改用 5–10 个品类种子词 → market_research_keyword，以<b>关键词市场</b>代替类目节点做细分市场；集中度是点击集中度，报告里写明口径。</p></div><div class="callout warnbox"><p><b>卡点：白名单为 0 → 放宽重跑；集中度只排序不排除</b></p></div></section><section class="section" id="s2"><h2><span class="num">2</span>第 2 步 · 筛选产品</h2><p class="sub">把选品逻辑写成 filter，在白名单内捞商品，只捞不排序。主路径与 product_search 补充两个来源分开标注。</p><table><thead><tr><th>规则</th><th>怎么算</th><th>角度</th></tr></thead><tbody><tr><td>A 评论门槛洼地</td><td>价格带 + 月销下限 + 评论数上限 + 抛重上限</td><td>时间成本</td></tr><tr><td>B 差评改良位</td><td>月销下限 + 星级 ≤4.2</td><td>产品缺陷</td></tr><tr><td>C 新品已验证</td><td>上架 ≤12 月 + 月销下限 + 评论数上限</td><td>形态验证</td></tr><tr><td>D 近期攒评快</td><td>评论数 ÷ 在架天数，只对上架 ≤12 月的品算（老品会虚高）</td><td>当下热度</td></tr><tr><td>E 评论转化效率</td><td>月销售额 ÷ 评论数，卡评论数 ≥30（分母小会失真）</td><td>评论依赖度</td></tr><tr><td>F FBA 占售价</td><td>fba_fee ÷ price ≤18% —— 筛的是物流不吃利润的位置，不是轻小件</td><td>物流拖累</td></tr><tr><td>J 大盘子低门槛</td><td>月销售额 ≥$20k 且评论数 30–500（质量最高的一条）</td><td>盘子 × 门槛</td></tr></tbody></table><div class="callout warnbox"><p>抛重 = L×W×H(cm) ÷ 抛重除数，第 2 步就挡掉大件；<b>钢制等高密度品抛重会严重低估</b>，第 4 步必须用 weight_g / 实重复核。</p><p>Sorftime 估毛利 gross_profit_margin 不含头程和广告，只能粗筛参考，不当硬门槛。</p><p>命中量先松后紧：<b>&gt;200 收紧一档、&lt;30 放宽一档，每次只动一条并写明</b>。</p></div><div class="callout warnbox"><p><b>卡点：命中 &gt;200 收紧一档、&lt;30 放宽一档，每次只动一条并写明</b></p></div></section><section class="section" id="s3"><h2><span class="num">3</span>第 3 步 · 梳理产品定位</h2><p class="sub">一个定位 = 节点 + 价格带 + 形态，跨两个价格带的拆成两个。形态靠标题关键词聚类；凑不够 3 款的列「散件」不硬凑。每个定位继承所属节点的竞争背景，并统计第 2 步各规则的命中分布。</p><table><thead><tr><th>打标</th><th>触发条件</th></tr></thead><tbody><tr><td>不推荐</td><td>类目同比为负 · 或评论数中位 ≥2,000</td></tr><tr><td>加分</td><td>评论数中位 ≤200 · 多款同时命中 ≥3 条规则 · 带内均分偏低</td></tr><tr><td>扣分</td><td>中国卖家 ≥85% · 抛重中位 ≥3kg · 带内 &lt;5 款</td></tr></tbody></table><div class="callout"><p>命中分布的含义：<b>B 多</b> = 差评位；<b>C / D 多</b> = 新品能起来；<b>J 多</b> = 大盘子低门槛。</p><p>继承的竞争背景：Top3 集中度、自营占比、退货率、&lt;300 评占比、类目同比、中国卖家占比。</p><p><b>这一步只归类不取舍，砍是第 5 步的事。</b></p></div><div class="callout warnbox"><p><b>卡点：定位写不成一行 = 还没归好类</b></p></div></section><section class="section" id="s4"><h2><span class="num">4</span>第 4 步 · 拓展对标产品</h2><p class="sub">每个定位 10 个：定位内头部 4 + 定位内新品 3 + 相邻价格带头部 3，按月销排序、父 ASIN 去重。</p><table><thead><tr><th>动作</th><th>规则</th></tr></thead><tbody><tr><td>补字段</td><td>逐个 product_detail 补尺寸、实重、FBA、主图；补完当场过滤大件</td></tr><tr><td>补不齐</td><td>标「待补」或按同规格 FBA 款代入并标推定值</td></tr><tr><td>入选理由</td><td>每款写一句「为什么入选」，写不出的不该在这 10 个里</td></tr><tr><td>相邻价格带</td><td>用来回答「买家凭什么多付 / 少付」，别省</td></tr></tbody></table><div class="callout warnbox"><p>Sorftime 已知坑：category_report 明细有 package_size 但<b>没有重量、变体数、主图</b>，这三样要 product_detail 补，一个 ASIN 一次调用 —— 要带图的 ASIN 数量开跑前规划好。</p><p>按 ASIN 拼的 Amazon 图片直链返回占位 GIF，主图只能用 product_detail.main_image。</p></div><div class="callout warnbox"><p><b>卡点：凑不够 10 个 → 放宽价格带或并回上一个</b></p></div></section><section class="section" id="s5"><h2><span class="num">5</span>第 5 步 · 计算利润并筛选</h2><p class="sub">货源走 1688，两路都跑、分两张表列（不能按销量混排）。</p><table><thead><tr><th>项目</th><th>规则</th></tr></thead><tbody><tr><td>以图搜图</td><td>ali1688_product_search_from_image，用对标里形态最主流那款的主图（不是差异化最大的），一张不行换 2–3 张；捞到的多是跨境导向卖家</td></tr><tr><td>类目节点</td><td>ali1688_category_tree 逐层到叶子 → ali1688_product_search(node_id=叶子) 只传节点；捞到的多是产业带工厂，更可能接改模</td></tr><tr><td>默认参数</td><td>头程 ¥12/计费kg、抛重除数 6000、汇率 6.70、佣金按站点类目阶梯（不一律 15%）、广告占比 20%、退货率用节点实测值、FBA 用真值 —— 全部显著标「示例」</td></tr><tr><td>逆风测试</td><td>采购 +10%、广告 30%、退货率 ×1.5</td></tr><tr><td>一组数</td><td>一个定位用一组数：售价取价格带中位数，尺寸重量取 10 个对标的中位数</td></tr><tr><td>待补红线</td><td>采购价无结果 / 报错 / 零报价都不等于零成本，标「待补」该行利润留空；相似款不是同款；不同规格不平均成一条不存在的报价</td></tr><tr><td>首批件数</td><td>(资金上限 − 60 天广告预留 − 头程) ÷ 采购单价。广告后贡献不是净利润（未含固定管理费、税）</td></tr></tbody></table><h3>公式（先列给用户确认再算，尺寸为 cm，抛重直接 ÷ 除数，不要再乘 16.387）</h3><pre><span class="cm"># 单位：尺寸 cm、重量 kg、金额 USD（采购与头程运价为 CNY）</span>
+计费重       = max(实重, 抛重)
+头程($/件)   = 计费重 × 运价(¥/kg) ÷ 汇率
+广告前毛利   = 售价 − 佣金 − FBA − (1688 采购 ÷ 汇率 + 头程)
+毛利率       = 广告前毛利 ÷ 售价
+保本广告占比 = 毛利率 − 退货率
+广告后贡献   = 广告前毛利 − 售价 × (广告占比 + 退货率)</pre><h3>判定线</h3><table><thead><tr><th>判定</th><th>条件</th><th>动作</th></tr></thead><tbody><tr><td><span class="tag ok">通过</span></td><td>毛利率 ≥30% 且保本广告占比 ≥25%</td><td>进第 6 步，回填目标售价、到岸成本上限、采购价上限、首批件数</td></tr><tr><td><span class="tag warn">观察</span></td><td>毛利率 20–30%，或逆风后为负</td><td>等真实报价再算</td></tr><tr><td><span class="tag bad">淘汰</span></td><td>毛利率 &lt;20%，或顺风后为负</td><td>写清卡在哪项、什么条件能翻案</td></tr></tbody></table><div class="callout warnbox"><p><b>全部不过线时改定位或换供应链，不许调低目标利润率。</b></p></div><div class="callout warnbox"><p><b>卡点：缺尺寸重量标「待补」；全不过 → 改定位或换供应链，不许调低目标利润率</b></p></div></section><section class="section" id="s6"><h2><span class="num">6</span>第 6 步 · 从评论找改良点</h2><p class="sub">每个通过的定位挑 2 个代表 ASIN，拉差评 + customers say，必要时站外佐证。样本量必须写进报告。</p><table><thead><tr><th>归堆</th><th>处理</th></tr></thead><tbody><tr><td>改产品能解决</td><td>进四格表，按出现次数排序</td></tr><tr><td>改 listing 能解决</td><td>适配范围、规格说明、素材澄清</td></tr><tr><td>不是产品问题</td><td>物流、包装破损 —— 第 1 步的「高退货嫌疑」在这里验证</td></tr></tbody></table><div class="callout"><p>改产品的每条走完<b>四格</b>：改良点 → 设计方向 → 规格材质 → 验收标准（可测），保留英文原话。</p><p><b>走不完四格的不进 PRD。</b>与第 3 步定位冲突时以差评为准并写明改了什么。</p><p>Sorftime 接口上限：product_reviews 最多 100 条、仅近一年。</p></div><div class="callout warnbox"><p><b>卡点：痛点全是物流类 → 无改良空间，换一条</b></p></div></section><section class="section" id="s7"><h2><span class="num">7</span>第 7 步 · 合规检查</h2><p class="sub">无接口，检索式 + 人工核对。</p><table><thead><tr><th>检查项</th><th>做法</th></tr></thead><tbody><tr><td>专利</td><td>先看对标标题 / 五点里自述的 &quot;Patented&quot;，再用改良点结构关键词 + 品牌名在 USPTO / Google Patents 检索；撞上竞品自述专利方向判高风险</td></tr><tr><td>商标</td><td>产品名与卖点词查 USPTO；形容词性卖点词逐个查</td></tr><tr><td>安规</td><td>按品类列必需认证，写清谁办、多久、大概多少钱</td></tr></tbody></table><div class="callout warnbox"><p>高 → 砍掉或回第 6 步；中（要办认证）→ 写进 PRD 成本与节点；低 → 通过。</p><p>报告必须出现原句：<b>「初筛不替代法律意见，高风险必须律师复核」</b>。</p></div><div class="callout warnbox"><p><b>卡点：高风险 → 砍掉或回第 6 步</b></p></div></section><section class="section" id="s8"><h2><span class="num">8</span>第 8 步 · 产出开品文档</h2><p class="sub">每个通过的定位各一份 PRD（不要只做一个）。</p><table><thead><tr><th>产出</th><th>规则</th></tr></thead><tbody><tr><td>PRD 八节</td><td>定位 → 卖点（标对应差评条数）→ 规格（含包装尺寸与毛重上限）→ 到岸成本上限 → 验收标准 → 合规要求 → 变体规划 → 交付节点；每节标来自哪一步</td></tr><tr><td>打样检查表</td><td>末项固定「专利核查回执，没打勾不下量产单」</td></tr><tr><td>5 家供应商</td><td>按定位形态词先去噪，再按公式排序；十列：厂家（可点 1688 链接）· 产地 · 报价 · 起订 · 30天销量 · 复购率 · 服务分 · 发货时效 · 是否一件代发 · 在售款</td></tr><tr><td>降级条件</td><td>候选全是 30 天销量个位数 = 这个方向没人批量做，采购价与利润结论一起降级</td></tr><tr><td>工厂版规格书</td><td>每个定位一个文件，删掉到岸成本、售价、毛利率、保本广告占比、退货率、任何美元金额、对标 ASIN、竞品品牌名（改「市面已有品牌」）、差评条数（改「用户反馈」）；不给目标采购价，让工厂报价</td></tr><tr><td>工厂版必备</td><td>结尾附报价要求（含税与否 · 起订量与阶梯价 · 打样费与周期 · 能否改模及费用 · 包装与外箱尺寸毛重 · 可提供的检测报告）；页脚写「本文只含规格与验收要求，不含我方成本、定价与渠道信息」</td></tr><tr><td>交付前自检</td><td>grep 正则 B0[A-Z0-9]{8} / 到岸 / 毛利 / 差评 / $[0-9] 和竞品品牌名，结果必须为空</td></tr></tbody></table><div class="callout"><p>供应商排序分 = <b>√(30天销量) + 复购率×0.3 + 工厂身份加分（超级工厂 30 / 实力商家 15）+ 服务分三项之和×2</b>。</p><p>1688 价格是否含税 / 起订价未验证，报告标来源与查询日期。</p></div><div class="callout warnbox"><p><b>卡点：花钱动作停下等人确认</b></p></div></section><section class="section" id="appendix"><h2><span class="num">附</span>口径红线、数据源与停下点</h2><p class="sub">这些规则跨步骤生效，写进每一份交付物。</p><h3>A · 数据源选择（每次开跑前先查）</h3><table><thead><tr><th>路径</th><th>条件</th><th>做法</th></tr></thead><tbody><tr><td>首选 · 完整版 Sorftime</td><td>客户端单独接了 Sorftime MCP</td><td>类目 TOP100 category_report、商品详情 product_detail（含尺寸重量）走完整版；两条路径都能用 market_query_sorftime 里的 1688 / category_tree / potential_product</td></tr><tr><td>降级 · 卖家精灵</td><td>没有 Sorftime 工具</td><td>不要停下、也不要编数据。先把费用说明<b>原样转告用户一次</b>，拿到「继续」再开跑：market_research_keyword / market_mine_keywords / market_list_competitors / market_get_reviews 每次 2 积分（¥0.2），先给调用次数与积分估算，附充值链接。第 1、2 步按关键词市场圈细分；报告首节写明「数据源：卖家精灵和 Sorftime 1688，无类目 TOP100」和本轮消耗积分</td></tr><tr><td>控费</td><td>每个 market_* 调用前</td><td>按「定位数 × 对标数」这类乘法先估总次数；超预算就停下来说明再继续。返回 insufficient_balance 立即停，转告充值链接，充值后从断点继续，不要重试刷</td></tr><tr><td>配额</td><td>Sorftime 返回「MCP使用次数已达到上限」</td><td>账号级配额耗尽，立即停、别重试；告知升级或本轮剩余步骤改走卖家精灵路径（同样先告知费用）</td></tr></tbody></table><h3>B · 产出规范（最终交付物）</h3><div class="callout"><p>客户端能写文件时，最终交付<b>一份自包含八 tab 单页 HTML</b>：每步一个 tab，每个 tab = 角标 → 收敛型标题（如「87 个类目 → 9 白名单 → 2 推荐」）→ 口径行（站点 / 数据源 / 生成日期 / 样本）→ 结论先行 → KPI → 正文。</p><p>深赭 <b>#8c3f1c</b> + 墨棕 <b>#2a2419</b>，<b>不加任何水印</b>，禁外链 CSS / JS / 字体，图片 base64 内嵌。</p><p>第 5 步利润表必须可调：<b>全局参数 + 每行输入，改完即时重算，带「恢复默认」</b>。</p><p>不能写文件时按同样结构用 Markdown 分步输出；用户明确要纯文本才降级。</p></div><h3>C · 口径红线</h3><table><thead><tr><th>红线</th><th>要求</th></tr></thead><tbody><tr><td>不许出现没格式的段落</td><td>&lt;style&gt; 里必须给正文 p / h3 / ul / li 设字号（12.5–13.5px）、行高（≈1.75）和段间距 —— 全局 *{margin:0} 后裸 &lt;p&gt; 会挤成一团；「选择原因：/ 推荐意见：/ 受众与场景：」做成带左边线的独立块；flex / grid 容器里不要直接混放文字和 &lt;b&gt;，先包一层 &lt;p&gt; 或 &lt;span&gt;</td></tr><tr><td>ASIN 表</td><td>凡出现 ASIN 的表带主图与 https://www.amazon.com/dp/&lt;ASIN&gt; 链接；第 2 步命中结果全部逐条列出，按命中条数分组，命中原因写成一段人话</td></tr><tr><td>样本口径</td><td>TOP100 是样本不是全量：说「进榜数」，不说「在售数」。单品平均效率 = 价格带销量占比 ÷ 价格带进榜数（1.00% 为基准）</td></tr><tr><td>用词</td><td>说「细分市场」不说「格子」；拿不到的字段标「待补」，绝不编数；示例参数显著标「示例」；不承诺量化收益</td></tr><tr><td>报告内容</td><td>不写 prompt、不写教学旁白</td></tr><tr><td>自家数据</td><td>多宝鱼 MCP 只覆盖用户自己店铺数据；想看自家已有品真实表现用 data_query，与 Sorftime 市场数据分开标注来源</td></tr></tbody></table><h3>D · Sorftime 接口已知坑</h3><div class="callout warnbox"><p>category_search_from_top_node 的 top_node 参数失效；search_categories_broadly 的 ratings_count_max 无效且无类目参数 —— 第 1 步只走 category_tree + 逐个 category_report。</p><p>category_stats_report 的值是带前缀整句（如 "Top-80% products median price: 33.99"），<b>先按最后一个冒号切再取数</b>；median_price 可能是 0.00、return_rate 可能是空串，中位价用明细自算，退货率标「待补」。</p><p>集中度只有 Top3，报告里写明「Top3」，不能简写成「集中度」。占比类参数用 0–1（10% 传 0.1）；ratings_max 是星级，ratings_count_max 是评论条数。</p><p>seller_origin 是中文枚举，中国卖家占比 = (中国 + 中国香港 + 中国台湾) ÷ 非「未知」样本。</p><p>1688 系列数值参数默认值是 0 而不是「不限」，不需要的条件不要传；ali1688_product_search 没有关键词参数，且传 node_id 时 sales_of_30d 恒为 0 —— 节点检索只传 node_id。</p><p>category_report 明细单次约 75KB，落盘后用脚本批量解析，别把明细塞进上下文。</p></div><h3>E · 停下来等人的三处</h3><div class="mini"><span>打样下单</span><span>备货</span><span>上架发布</span></div><div class="callout"><p>到这三处停住，把数字和风险摆出来等用户确认。</p></div><h3>F · 页脚来源行（必须保留）</h3><div class="callout"><p><b>实际数据源</b>（店铺数据 / 广告数据 / 卖家精灵 / 1688 接口 / 用户上传报表，没用到的不写）· 数据截止日期 · 生成日期。</p></div></section><div class="footer">个人选品 SOP · amazon-eight-step-selection · 规则整理于 2026-11-13 · 仅供内部选品流程参考<br>
+本文只总结规则，不含本次跑数的分析结论；如需具体测算请见同目录《工具类目选品开品报告》。</div>
+</div>
+<script>
+(function(){
+ var links=document.querySelectorAll('.nav a');
+ for(var i=0;i<links.length;i++){(function(a){a.addEventListener('click',function(e){
+   e.preventDefault();var t=document.getElementById(a.getAttribute('href').slice(1));
+   if(t){var y=t.getBoundingClientRect().top+window.pageYOffset-70;window.scrollTo({top:y,behavior:'smooth'});}
+ });})(links[i]);}
+})();
+</script>
+</body></html>
