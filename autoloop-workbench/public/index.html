@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Autoloop 工作台</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark"><i></i></span>
+        <div class="brand-text">
+          <h1>Autoloop 工作台</h1>
+          <p>本机运行 · 不对外</p>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="conn" id="conn">
+          <span class="dot" id="conn-dot"></span>
+          <span id="conn-text">正在连接…</span>
+        </div>
+        <div class="refresh-meta">
+          <span id="last-update">—</span>
+          <span class="sep">·</span>
+          <span id="countdown">30s 后刷新</span>
+        </div>
+        <button class="btn btn-ghost" id="refresh-btn" type="button" title="立即刷新">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13.6 8a5.6 5.6 0 1 1-1.7-4M13.6 2.4v3.4h-3.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          刷新
+        </button>
+      </div>
+      <div class="refresh-track"><i id="refresh-bar"></i></div>
+    </header>
+
+    <div class="banner" id="banner" hidden></div>
+
+    <main>
+      <!-- ── 上：今天跑了几轮、用了多少 Token、谁在线 ───────────────── -->
+      <section class="section" aria-labelledby="s-overview">
+        <div class="section-head">
+          <h2 id="s-overview">今日概览</h2>
+          <span class="section-note" id="overview-note">—</span>
+        </div>
+
+        <div class="kpi-row">
+          <article class="kpi">
+            <div class="kpi-label">今天跑了几轮</div>
+            <div class="kpi-value" id="kpi-rounds">—</div>
+            <div class="kpi-sub" id="kpi-rounds-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">今天用了多少 Token</div>
+            <div class="kpi-value" id="kpi-tokens">—</div>
+            <div class="kpi-sub" id="kpi-tokens-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">等你拍板</div>
+            <div class="kpi-value" id="kpi-cards">—</div>
+            <div class="kpi-sub" id="kpi-cards-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">正在跑</div>
+            <div class="kpi-value" id="kpi-running">—</div>
+            <div class="kpi-sub" id="kpi-running-sub">—</div>
+          </article>
+        </div>
+
+        <div class="panel online-panel">
+          <div class="online-head">
+            <h3>谁在线</h3>
+            <span id="online-summary" class="muted">—</span>
+          </div>
+          <div class="online-grid">
+            <div class="online-group">
+              <div class="group-label">Agent <span class="group-hint">干活的</span></div>
+              <div id="agents-list" class="chip-list"></div>
+            </div>
+            <div class="online-group">
+              <div class="group-label">机器人 / 通道 <span class="group-hint">收发消息的</span></div>
+              <div id="channels-list" class="chip-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 中：等人点的卡片、正在跑的、最近 20 轮 ─────────────────── -->
+      <section class="section" aria-labelledby="s-now">
+        <div class="section-head">
+          <h2 id="s-now">现在</h2>
+          <span class="section-note" id="now-note">—</span>
+        </div>
+
+        <div class="block">
+          <div class="block-head">
+            <h3>等人点的卡片</h3>
+            <span class="count-badge" id="cards-count">0</span>
+          </div>
+          <div id="cards-grid" class="cards-grid"></div>
+        </div>
+
+        <div class="two-col">
+          <div class="block">
+            <div class="block-head">
+              <h3>正在跑</h3>
+              <span class="count-badge" id="running-count">0</span>
+            </div>
+            <div id="running-list" class="stack-list"></div>
+          </div>
+
+          <div class="block">
+            <div class="block-head">
+              <h3>最近 20 轮 · 各一句结论</h3>
+              <span class="count-badge" id="history-count">0</span>
+            </div>
+            <div id="history-list" class="stack-list history-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 下：每条规则下次几点跑 + 三个动作 ──────────────────────── -->
+      <section class="section" aria-labelledby="s-rules">
+        <div class="section-head">
+          <h2 id="s-rules">规则与定时</h2>
+          <span class="section-note" id="rules-note">—</span>
+        </div>
+        <div id="rules-list" class="rules-list"></div>
+      </section>
+
+      <!-- ── 多宝鱼 MCP：亚马逊店铺数据 ─────────────────────────────── -->
+      <section class="section" aria-labelledby="s-dby">
+        <div class="section-head">
+          <h2 id="s-dby">多宝鱼 · 店铺数据</h2>
+          <span class="section-note" id="dby-note">正在读取 MCP…</span>
+          <div class="range-tabs" id="dby-range" role="tablist">
+            <button class="range-tab active" data-hours="24" type="button">近 24 小时</button>
+            <button class="range-tab" data-hours="168" type="button">近 7 天</button>
+            <button class="range-tab" data-hours="720" type="button">近 30 天</button>
+          </div>
+          <button class="btn btn-ghost btn-mini" id="dby-refresh-btn" type="button">刷新数据</button>
+        </div>
+
+        <div class="kpi-row dby-kpis">
+          <article class="kpi">
+            <div class="kpi-label" id="dby-orders-label">近 24 小时订单</div>
+            <div class="kpi-value" id="dby-orders-count">—</div>
+            <div class="kpi-sub" id="dby-orders-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label" id="dby-sales-label">近 24 小时销售额</div>
+            <div class="kpi-value" id="dby-sales">—</div>
+            <div class="kpi-sub" id="dby-sales-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">断货预警</div>
+            <div class="kpi-value" id="dby-alerts">—</div>
+            <div class="kpi-sub" id="dby-alerts-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">店铺 / 站点</div>
+            <div class="kpi-value" id="dby-stores">—</div>
+            <div class="kpi-sub" id="dby-stores-sub">—</div>
+          </article>
+        </div>
+
+        <div class="two-col dby-cols">
+          <div class="block">
+            <div class="block-head"><h3>订单状态与热销 SKU</h3></div>
+            <div id="dby-orders"></div>
+          </div>
+          <div class="block">
+            <div class="block-head">
+              <h3>断货预警</h3>
+              <span class="count-badge" id="dby-alert-count">0</span>
+            </div>
+            <div id="dby-stockout" class="stack-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 广告分析 ──────────────────────────────────────────────── -->
+      <section class="section" aria-labelledby="s-ads">
+        <div class="section-head">
+          <h2 id="s-ads">广告分析</h2>
+          <span class="section-note" id="ads-note">正在读取…</span>
+          <button class="btn btn-ghost btn-mini" id="ads-sync-btn" type="button" title="重新从亚马逊拉取广告报表">重跑同步</button>
+          <button class="btn btn-ghost btn-mini" id="ins-refresh-btn" type="button">刷新洞察</button>
+        </div>
+
+        <div class="kpi-row">
+          <article class="kpi">
+            <div class="kpi-label">广告账户</div>
+            <div class="kpi-value" id="ads-conn">—</div>
+            <div class="kpi-sub" id="ads-conn-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">最近报表同步</div>
+            <div class="kpi-value" id="ads-sync">—</div>
+            <div class="kpi-sub" id="ads-sync-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">数据健康度</div>
+            <div class="kpi-value" id="ads-health">—</div>
+            <div class="kpi-sub" id="ads-health-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">目标 ACOS</div>
+            <div class="kpi-value" id="ads-acos">—</div>
+            <div class="kpi-sub" id="ads-acos-sub">—</div>
+          </article>
+        </div>
+
+        <div class="block perf-block">
+          <div class="block-head">
+            <h3>广告表现 · SP 广告（美国站，亚马逊 7 天归因）</h3>
+            <span class="section-note">当天数据为盘中预估，归因会在 14 天内回改</span>
+          </div>
+          <div id="ads-perf" class="perf-grid"></div>
+        </div>
+
+        <div class="two-col">
+          <div class="block">
+            <div class="block-head">
+              <h3>SP 广告活动</h3>
+              <span class="count-badge" id="ads-camp-count">0</span>
+            </div>
+            <div id="ads-campaigns" class="stack-list"></div>
+          </div>
+          <div class="block">
+            <div class="block-head">
+              <h3>预算预警 · 今日烧钱 ≥ 80%</h3>
+              <span class="count-badge" id="ads-budget-count">0</span>
+            </div>
+            <div id="ads-budget" class="stack-list"></div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-head">
+            <h3>同步记录 / 健康检查</h3>
+          </div>
+          <div id="ads-sync-runs" class="stack-list"></div>
+        </div>
+      </section>
+
+      <!-- ── 广告优化方案 ──────────────────────────────────────────── -->
+      <section class="section" aria-labelledby="s-adplan">
+        <div class="section-head">
+          <h2 id="s-adplan">广告优化方案</h2>
+          <span class="section-note" id="adplan-note">正在读取…</span>
+        </div>
+
+        <div class="kpi-row">
+          <article class="kpi">
+            <div class="kpi-label">推荐总数</div>
+            <div class="kpi-value" id="adplan-total">—</div>
+            <div class="kpi-sub" id="adplan-total-sub">—</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">浪费控制</div>
+            <div class="kpi-value" id="adplan-waste">—</div>
+            <div class="kpi-sub">零成交烧钱词 · 该否就否</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">增长机会</div>
+            <div class="kpi-value" id="adplan-opp">—</div>
+            <div class="kpi-sub">出单词收进精准 / 提竞价</div>
+          </article>
+          <article class="kpi">
+            <div class="kpi-label">监控项</div>
+            <div class="kpi-value" id="adplan-watch">—</div>
+            <div class="kpi-sub">先看数据再动手</div>
+          </article>
+        </div>
+
+        <div class="block">
+          <div class="block-head">
+            <h3>最新推荐（按优先级）</h3>
+            <span class="count-badge" id="adplan-count">0</span>
+            <div class="rec-toolbar">
+              <button class="btn btn-mini btn-ok-soft" id="rec-mark-done" type="button" disabled>标记已处理</button>
+              <button class="btn btn-mini btn-ghost" id="rec-mark-ignore" type="button" disabled>标记忽略</button>
+            </div>
+          </div>
+          <p class="hint-line">勾选后标记「已处理 / 忽略」。否词与竞价建议需在卖家后台或多宝鱼侧操作后回来标记（MCP 不支持直接创建 SP 否词）。</p>
+          <div id="adplan-list" class="stack-list"></div>
+        </div>
+      </section>
+
+      <!-- ── 店铺优化方案 ──────────────────────────────────────────── -->
+      <section class="section" aria-labelledby="s-store">
+        <div class="section-head">
+          <h2 id="s-store">店铺优化方案</h2>
+          <span class="section-note" id="store-note">正在读取…</span>
+        </div>
+
+        <div class="two-col">
+          <div class="block">
+            <div class="block-head">
+              <h3>待处理问题（按优先级）</h3>
+              <span class="count-badge" id="store-issue-count">0</span>
+            </div>
+            <div id="store-issues" class="stack-list"></div>
+          </div>
+          <div class="block">
+            <div class="block-head"><h3>账户余额（USD）</h3></div>
+            <div id="store-balances" class="stack-list"></div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="block-head">
+            <h3>补货建议 · 未来 12 个月需求预测（US 池）</h3>
+            <span class="section-note" id="forecast-note">正在读取…</span>
+          </div>
+          <div id="store-forecast"></div>
+        </div>
+      </section>
+
+      <!-- ── 产品优化方案 ──────────────────────────────────────────── -->
+      <section class="section" aria-labelledby="s-product">
+        <div class="section-head">
+          <h2 id="s-product">产品优化方案</h2>
+          <span class="section-note" id="product-note">正在读取…</span>
+        </div>
+        <div id="product-list" class="cards-grid product-grid"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>每 30 秒读取 <code>agent-autoloop status --json</code>；结论来自 <code>agent-autoloop runs --json</code>。</span>
+      <span>按钮直接调用 <code>pause</code> / <code>resume</code> / <code>run</code>。服务只监听 127.0.0.1，不对外。</span>
+    </footer>
+  </div>
+
+  <div class="toast-wrap" id="toast-wrap" aria-live="polite"></div>
+
+  <!-- 变更预览弹窗：prepare 结果逐条念给你听，确认后才真正写入 -->
+  <div class="modal-mask" id="plan-modal" hidden>
+    <div class="modal" role="dialog" aria-labelledby="plan-modal-title">
+      <h3 id="plan-modal-title">确认写入亚马逊广告账户</h3>
+      <p class="modal-sub">以下变更尚未生效。确认后本机会直接调用亚马逊广告 API 写入（30 分钟内有效的一次性计划）。</p>
+      <div id="plan-modal-body" class="plan-modal-body"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="plan-cancel" type="button">取消</button>
+        <button class="btn btn-danger" id="plan-confirm" type="button">确认执行</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
